@@ -8,7 +8,11 @@ import (
   "github.com/gorilla/websocket"
 )
 
-var upgrader = websocket.Upgrader{}
+const ADDR = "localhost:9001"
+
+var upgrader = websocket.Upgrader{
+  CheckOrigin: checkRequestOrigin,
+}
 
 // TODO disallow wrong origin
 func checkRequestOrigin(req *http.Request) bool {
@@ -16,8 +20,6 @@ func checkRequestOrigin(req *http.Request) bool {
 }
 
 func connect(writer http.ResponseWriter, req *http.Request) {
-  upgrader.CheckOrigin = checkRequestOrigin
-
   connection, err := upgrader.Upgrade(writer, req, nil)
 
   if err != nil {
@@ -45,5 +47,7 @@ func main() {
 
   router.HandleFunc("/connect", connect)
 
-  log.Fatal(http.ListenAndServe(":9100", router))
+  fmt.Printf("listening on %s\n", ADDR)
+
+  log.Fatal(http.ListenAndServe(ADDR, router))
 }
