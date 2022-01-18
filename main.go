@@ -1,53 +1,21 @@
 package main
 
 import (
-  "fmt"
-  "log"
-  "net/http"
-  "github.com/gorilla/mux"
-  "github.com/gorilla/websocket"
+	"fmt"
+	"github.com/gorilla/mux"
+	"log"
+	"net/http"
+	"github.com/jacksonludwig/connect4-server/game"
 )
 
 const ADDR = "localhost:9001"
 
-var upgrader = websocket.Upgrader{
-  CheckOrigin: checkRequestOrigin,
-}
-
-// TODO disallow wrong origin
-func checkRequestOrigin(req *http.Request) bool {
-  return true
-}
-
-func connect(writer http.ResponseWriter, req *http.Request) {
-  connection, err := upgrader.Upgrade(writer, req, nil)
-
-  if err != nil {
-    fmt.Printf("error upgrading connection: %s\n", err.Error())
-    return
-  }
-
-  defer connection.Close()
-
-  // main event loop
-  for {
-    _, msg, err := connection.ReadMessage()
-
-    if err != nil {
-      fmt.Printf("error reading message: %s\n", err.Error())
-      break
-    }
-
-    fmt.Printf("message received: %s\n", msg)
-  }
-}
-
 func main() {
-  router := mux.NewRouter()
+	router := mux.NewRouter()
 
-  router.HandleFunc("/connect", connect)
+	router.HandleFunc("/connect", game.Connect)
 
-  fmt.Printf("listening on %s\n", ADDR)
+	fmt.Printf("listening on %s\n", ADDR)
 
-  log.Fatal(http.ListenAndServe(ADDR, router))
+	log.Fatal(http.ListenAndServe(ADDR, router))
 }
