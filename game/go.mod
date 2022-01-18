@@ -1,4 +1,4 @@
-module github.com/jacksonludwig/connect4-server
+module github.com/jacksonludwig/connect4-server/game
 
 go 1.16
 
