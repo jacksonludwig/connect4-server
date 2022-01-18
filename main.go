@@ -32,7 +32,7 @@ func connect(writer http.ResponseWriter, req *http.Request) {
     _, msg, err := connection.ReadMessage()
 
     if err != nil {
-      fmt.Printf("error upgrading connection: %s\n", err.Error())
+      fmt.Printf("error reading message: %s\n", err.Error())
       break
     }
 
