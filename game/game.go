@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gorilla/websocket"
 	"net/http"
+  "github.com/jacksonludwig/connect4-server/game/handlers"
 )
 
 var upgrader = websocket.Upgrader{
