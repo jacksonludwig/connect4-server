@@ -1,2 +1,4 @@
 github.com/gorilla/websocket v1.4.2 h1:+/TMaTYc4QFitKJxsQ7Yye35DkWvkdLcvGKqM+x0Ufc=
 github.com/gorilla/websocket v1.4.2/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+github.com/jacksonludwig/connect4-server/game/handlers v0.0.0-20220119172957-4b50ca2d0002 h1:ouVOGv7e5xSn1r+TyWmy4rgfCaaij0mvxRuRTJYjP58=
+github.com/jacksonludwig/connect4-server/game/handlers v0.0.0-20220119172957-4b50ca2d0002/go.mod h1:xv+fTg1c8zKP2lL/QyFwLf/FHANSRaxshI4apYxFjsg=

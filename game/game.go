@@ -1,11 +1,18 @@
 package game
 
 import (
+	"encoding/json"
 	"fmt"
-	"github.com/gorilla/websocket"
 	"net/http"
-  "github.com/jacksonludwig/connect4-server/game/handlers"
+
+	"github.com/gorilla/websocket"
+	"github.com/jacksonludwig/connect4-server/game/handlers"
 )
+
+type ClientActionRequest struct {
+	Category string      `json:"category"`
+	Data     interface{} `json:"data"`
+}
 
 var upgrader = websocket.Upgrader{
 	CheckOrigin: checkRequestOrigin,
@@ -35,6 +42,19 @@ func Connect(writer http.ResponseWriter, req *http.Request) {
 			break
 		}
 
+		var actionReq ClientActionRequest
+		json.Unmarshal([]byte(msg), &actionReq)
+
+		switch actionReq.Category {
+		case "CreateGame":
+			handlers.CreateGame(actionReq.Data)
+			break
+
+		default:
+			break
+		}
+
 		fmt.Printf("message received: %s\n", msg)
+		fmt.Printf("category: %s", actionReq.Category)
 	}
 }
